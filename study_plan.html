@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generative & Agentic AI — Study Plan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.5.0/dist/tabler-icons.min.css" />
+
+  <style>
+    /* ── RESET & BASE ─────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+      --text:        #0F172A;
+      --text-2:      #64748B;
+      --text-3:      #94A3B8;
+      --text-4:      #CBD5E1;
+
+      --bg:          #F8F9FC;
+      --surface:     #FFFFFF;
+      --surface-2:   #F1F5F9;
+      --surface-3:   #E9EEF6;
+
+      --border:      #E2E8F0;
+      --border-2:    #CBD5E1;
+
+      --primary:     #4F46E5;
+      --primary-bg:  #EEF2FF;
+
+      --success:     #10B981;
+      --success-bg:  #ECFDF5;
+      --warning:     #F59E0B;
+      --warning-bg:  #FFFBEB;
+      --info:        #3B82F6;
+      --info-bg:     #EFF6FF;
+
+      --radius-sm:   6px;
+      --radius-md:   10px;
+      --radius-lg:   14px;
+      --radius-xl:   18px;
+
+      --shadow-sm:   0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+      --shadow-md:   0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.04);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    a { color: var(--info); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── LAYOUT ───────────────────────────────────────────────────────────── */
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ── TOP NAV ──────────────────────────────────────────────────────────── */
+    .topnav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .topnav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 52px;
+      gap: 12px;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .nav-brand-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--primary);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .nav-pills {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+    .nav-pill {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-2);
+      cursor: pointer;
+      transition: all .15s;
+      font-family: var(--font);
+      white-space: nowrap;
+    }
+    .nav-pill:hover { background: var(--surface-2); }
+    .nav-pill.on {
+      background: var(--text);
+      color: #fff;
+      border-color: var(--text);
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .btn-ghost {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-2);
+      cursor: pointer;
+      font-family: var(--font);
+      transition: all .15s;
+      white-space: nowrap;
+    }
+    .btn-ghost:hover { background: var(--surface-2); color: var(--text); }
+
+    @media (max-width: 600px) {
+      .nav-brand span { display: none; }
+      .nav-pills { display: none; }
+    }
+
+    /* ── HERO ─────────────────────────────────────────────────────────────── */
+    .hero {
+      padding: 40px 0 28px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    .hero h1 {
+      font-size: clamp(22px, 4vw, 30px);
+      font-weight: 700;
+      letter-spacing: -.4px;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .hero-desc {
+      font-size: 15px;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 600px;
+      margin-bottom: 16px;
+    }
+    .hero-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--primary);
+    }
+    .hero-link:hover { text-decoration: underline; }
+
+    /* ── KPI STRIP ────────────────────────────────────────────────────────── */
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 480px) { .kpi-strip { grid-template-columns: repeat(2,1fr); } }
+    .kpi {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+    }
+    .kpi-n {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+    }
+    .kpi-l {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 4px;
+    }
+
+    /* ── SECTION DIVIDER ──────────────────────────────────────────────────── */
+    .section { margin-bottom: 28px; }
+
+    .sec-hd {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+      border-bottom: 1.5px solid var(--border);
+    }
+    .sec-hd-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sec-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .sec-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: .01em;
+    }
+    .sec-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    /* ── FOUNDATIONS ──────────────────────────────────────────────────────── */
+    .f-block {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .f-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      cursor: pointer;
+      background: var(--surface-2);
+      transition: background .15s;
+      user-select: none;
+    }
+    .f-toggle:hover { background: var(--surface-3); }
+    .f-toggle-left {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .f-chev {
+      font-size: 16px;
+      color: var(--text-3);
+      transition: transform .22s;
+    }
+    .f-block.open .f-chev { transform: rotate(180deg); }
+    .f-body {
+      display: none;
+      padding: 18px 18px 20px;
+      border-top: 1px solid var(--border);
+    }
+    .f-block.open .f-body { display: block; }
+    .f-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+    }
+    .f-col h4 {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .f-col a {
+      display: block;
+      font-size: 12.5px;
+      color: var(--info);
+      line-height: 1.5;
+      margin-bottom: 5px;
+    }
+    .f-col a:hover { text-decoration: underline; }
+
+    /* ── MODULE LIST ──────────────────────────────────────────────────────── */
+    .mods { display: flex; flex-direction: column; gap: 7px; }
+
+    .mod {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      background: var(--surface);
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .mod:hover { border-color: var(--border-2); }
+    .mod.open {
+      border-color: var(--border-2);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .mod-hd {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      cursor: pointer;
+      background: var(--surface);
+      transition: background .15s;
+      user-select: none;
+    }
+    .mod-hd:hover { background: var(--surface-2); }
+
+    .mod-accent {
+      width: 4px;
+      min-height: 36px;
+      border-radius: 3px;
+      align-self: stretch;
+      flex-shrink: 0;
+    }
+    .mod-num {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .mod-info { flex: 1; min-width: 0; }
+    .mod-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.35;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .mod-meta {
+      font-size: 11.5px;
+      color: var(--text-3);
+      margin-top: 2px;
+    }
+    .mod-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    @media (max-width: 500px) { .mod-badge { display: none; } }
+    .mchev {
+      font-size: 16px;
+      color: var(--text-4);
+      transition: transform .22s;
+      flex-shrink: 0;
+    }
+    .mod.open .mchev { transform: rotate(180deg); }
+
+    .mod-body {
+      display: none;
+      border-top: 1px solid var(--border);
+    }
+    .mod.open .mod-body { display: block; }
+
+    /* ── TOPIC ROWS ───────────────────────────────────────────────────────── */
+    .topics { display: flex; flex-direction: column; }
+    .topic { border-bottom: 1px solid var(--border); }
+    .topic:last-child { border-bottom: none; }
+
+    .topic-hd {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px 12px 22px;
+      cursor: pointer;
+      background: var(--surface);
+      transition: background .15s;
+      user-select: none;
+    }
+    .topic-hd:hover { background: var(--surface-2); }
+
+    .topic-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .topic-name {
+      flex: 1;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.4;
+    }
+    .dbadge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 9px;
+      border-radius: 20px;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .db-b { background: var(--info-bg);    color: var(--info); }
+    .db-i { background: var(--warning-bg); color: #B45309; }
+    .db-a { background: #FEF2F2;           color: #B91C1C; }
+
+    .tchev {
+      font-size: 14px;
+      color: var(--text-4);
+      transition: transform .22s;
+      flex-shrink: 0;
+    }
+    .topic.open .tchev { transform: rotate(180deg); }
+
+    /* ── RESOURCE PANEL ───────────────────────────────────────────────────── */
+    .res-panel {
+      display: none;
+      padding: 16px 18px 20px 22px;
+      background: var(--surface-2);
+      border-top: 1px solid var(--border);
+    }
+    .topic.open .res-panel { display: block; }
+
+    .res-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+    }
+    @media (max-width: 480px) {
+      .res-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+    }
+    @media (max-width: 340px) {
+      .res-grid { grid-template-columns: 1fr; }
+    }
+
+    .res-col-head {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-2);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .res-col ul { list-style: none; }
+    .res-col li { margin-bottom: 5px; }
+    .res-col a {
+      font-size: 12.5px;
+      color: var(--info);
+      line-height: 1.45;
+      display: block;
+    }
+    .res-col a:hover { text-decoration: underline; }
+
+    /* ── FOOTER ───────────────────────────────────────────────────────────── */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0 40px;
+      margin-top: 40px;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      font-size: 12.5px;
+      color: var(--text-2);
+    }
+    .footer-links a:hover { color: var(--text); text-decoration: none; }
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-3);
+      margin-top: 16px;
+    }
+
+    /* ── BACK TO TOP ──────────────────────────────────────────────────────── */
+    #btt {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 40px;
+      height: 40px;
+      background: var(--text);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s;
+      box-shadow: var(--shadow-md);
+      z-index: 50;
+    }
+    #btt.show { opacity: 1; pointer-events: auto; }
+    #btt:hover { background: #1e293b; }
+
+    /* ── PROGRESS BAR (reading) ──────────────────────────────────────────── */
+    #reading-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: var(--primary);
+      width: 0%;
+      z-index: 200;
+      transition: width .1s;
+    }
+
+    /* ── SEARCH ───────────────────────────────────────────────────────────── */
+    .search-wrap {
+      position: relative;
+      margin-bottom: 16px;
+    }
+    .search-wrap i {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-3);
+      font-size: 15px;
+      pointer-events: none;
+    }
+    #search {
+      width: 100%;
+      padding: 9px 12px 9px 36px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-family: var(--font);
+      background: var(--surface);
+      color: var(--text);
+      outline: none;
+      transition: border-color .15s;
+    }
+    #search:focus { border-color: var(--primary); }
+    #search::placeholder { color: var(--text-4); }
+
+    /* ── PRINT ────────────────────────────────────────────────────────────── */
+    @media print {
+      .topnav, #btt, #reading-bar, .search-wrap, .nav-actions { display: none !important; }
+      body { background: #fff; }
+      .mod-body, .f-body { display: block !important; }
+      .res-panel { display: block !important; }
+      .mod, .f-block { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Reading progress bar -->
+<div id="reading-bar"></div>
+
+<!-- ── TOP NAV ─────────────────────────────────────────────────────────────── -->
+<nav class="topnav">
+  <div class="wrap topnav-inner">
+    <div class="nav-brand">
+      <div class="nav-brand-icon"><i class="ti ti-brain"></i></div>
+      <span>GenAI Study Plan</span>
+    </div>
+    <div class="nav-pills">
+      <button class="nav-pill on" onclick="setFilter('all',this)">All levels</button>
+      <button class="nav-pill" onclick="setFilter('b',this)">Beginner</button>
+      <button class="nav-pill" onclick="setFilter('i',this)">Intermediate</button>
+      <button class="nav-pill" onclick="setFilter('a',this)">Advanced</button>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-ghost" id="xbtn" onclick="toggleAll()">Expand all</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ── MAIN ────────────────────────────────────────────────────────────────── -->
+<main class="wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-eyebrow">
+      <i class="ti ti-school" style="font-size:14px"></i>
+      Complete study plan · 12-week programme
+    </div>
+    <h1>Generative &amp; Agentic AI</h1>
+    <p class="hero-desc">
+      I created this structured guide both to help myself and to help others better understand Generative and Agentic AI.
+      8 modules · 35 topics · curated free resources (videos, articles, books, and tools) for every topic.
+      Expand a module, then a topic to explore.
+    </p>
+    <p class="hero-desc" style="margin-bottom:0">
+      If you want to understand what's slowing your business down and where AI can (and can't) help, reach out:
+    </p>
+    <a class="hero-link" href="https://www.linkedin.com/in/hhoumane/" target="_blank">
+      <i class="ti ti-brand-linkedin" style="font-size:15px"></i>
+      Connect with me on LinkedIn
+    </a>
+  </header>
+
+  <!-- KPI STRIP -->
+  <div class="kpi-strip">
+    <div class="kpi">
+      <div class="kpi-n" id="kn-m">8</div>
+      <div class="kpi-l">Modules</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-n" id="kn-t">35</div>
+      <div class="kpi-l">Topics</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-n">140+</div>
+      <div class="kpi-l">Free resources</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-n">12 wk</div>
+      <div class="kpi-l">Timeline</div>
+    </div>
+  </div>
+
+  <!-- FOUNDATIONS -->
+  <section class="section" aria-label="Foundation resources">
+    <div class="sec-hd">
+      <div class="sec-hd-left">
+        <div class="sec-icon" style="background:#FAEEDA;color:#BA7517">
+          <i class="ti ti-star"></i>
+        </div>
+        <span class="sec-title">Foundation resources — start here</span>
+      </div>
+    </div>
+    <div class="f-block" id="fblock">
+      <div class="f-toggle" onclick="document.getElementById('fblock').classList.toggle('open')" role="button" aria-expanded="false" aria-controls="fblock-body">
+        <div class="f-toggle-left">
+          <i class="ti ti-books" style="font-size:16px;color:#64748B"></i>
+          Core reading &amp; tools before module 1
+        </div>
+        <i class="ti ti-chevron-down f-chev" aria-hidden="true"></i>
+      </div>
+      <div class="f-body" id="fblock-body">
+        <div class="f-grid">
+          <div class="f-col">
+            <h4><i class="ti ti-brand-youtube"></i> Video</h4>
+            <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi" target="_blank" rel="noopener">3Blue1Brown — Neural networks</a>
+            <a href="https://www.deeplearning.ai/courses/generative-ai-for-everyone/" target="_blank" rel="noopener">DeepLearning.AI — GenAI for Everyone</a>
+            <a href="https://www.youtube.com/watch?v=aircAruvnKk" target="_blank" rel="noopener">3B1B — What is a neural network?</a>
+          </div>
+          <div class="f-col">
+            <h4><i class="ti ti-book"></i> Books</h4>
+            <a href="https://www.deeplearningbook.org/" target="_blank" rel="noopener">Deep Learning — Goodfellow et al.</a>
+            <a href="https://d2l.ai/" target="_blank" rel="noopener">Dive into Deep Learning</a>
+            <a href="https://www.fast.ai/" target="_blank" rel="noopener">fast.ai — Practical Deep Learning</a>
+          </div>
+          <div class="f-col">
+            <h4><i class="ti ti-file-text"></i> Papers</h4>
+            <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">"Attention is All You Need"</a>
+            <a href="https://arxiv.org/abs/2212.08073" target="_blank" rel="noopener">Constitutional AI — Anthropic</a>
+            <a href="https://arxiv.org/abs/2308.08155" target="_blank" rel="noopener">AutoGen — Microsoft Research</a>
+          </div>
+          <div class="f-col">
+            <h4><i class="ti ti-tools"></i> Platforms</h4>
+            <a href="https://huggingface.co/learn" target="_blank" rel="noopener">Hugging Face NLP course</a>
+            <a href="https://kaggle.com/learn" target="_blank" rel="noopener">Kaggle Learn — ML courses</a>
+            <a href="https://developers.google.com/machine-learning/crash-course" target="_blank" rel="noopener">Google ML Crash Course</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODULES -->
+  <section class="section" aria-label="Course modules">
+    <div class="sec-hd">
+      <div class="sec-hd-left">
+        <div class="sec-icon" style="background:#EEEDFE;color:#534AB7">
+          <i class="ti ti-layout-list"></i>
+        </div>
+        <span class="sec-title">Course modules</span>
+      </div>
+      <div class="sec-right">
+        <!-- Mobile filter (shown when nav-pills hidden) -->
+        <div class="nav-pills" id="inline-pills" style="display:none">
+          <button class="nav-pill on" onclick="setFilter('all',this)">All</button>
+          <button class="nav-pill" onclick="setFilter('b',this)">Beginner</button>
+          <button class="nav-pill" onclick="setFilter('i',this)">Intermediate</button>
+          <button class="nav-pill" onclick="setFilter('a',this)">Advanced</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="search-wrap">
+      <i class="ti ti-search"></i>
+      <input id="search" type="search" placeholder="Search modules and topics…" oninput="onSearch(this.value)" autocomplete="off" />
+    </div>
+
+    <div class="mods" id="mlist" role="list"></div>
+    <p id="no-results" style="display:none;color:var(--text-3);font-size:13px;padding:16px 0">No topics match your search.</p>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="nav-brand-icon"><i class="ti ti-brain"></i></div>
+        Generative &amp; Agentic AI Study Plan
+      </div>
+      <div class="footer-links">
+        <a href="https://www.linkedin.com/in/hhoumane/" target="_blank" rel="noopener">
+          <i class="ti ti-brand-linkedin"></i> LinkedIn
+        </a>
+        <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">
+          Attention Paper
+        </a>
+        <a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">
+          Anthropic: Build Agents
+        </a>
+        <a href="https://stateof.ai/" target="_blank" rel="noopener">
+          State of AI Report
+        </a>
+      </div>
+    </div>
+    <p class="footer-copy">Built to learn. Share freely. All linked resources are publicly available and remain the property of their respective owners.</p>
+  </div>
+</footer>
+
+<!-- Back to top -->
+<button id="btt" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<!-- ── SCRIPTS ──────────────────────────────────────────────────────────────── -->
+<script>
+'use strict';
+
+// ─── DATA ─────────────────────────────────────────────────────────────────────
+
+const DIFF = {
+  b: { l: 'Beginner',     c: 'db-b' },
+  i: { l: 'Intermediate', c: 'db-i' },
+  a: { l: 'Advanced',     c: 'db-a' },
+};
+
+const MODS = [
+  {
+    id:1, title:'Foundations of generative and agentic AI', weeks:'Weeks 1–2',
+    color:'#3B8BD4', bg:'#E6F1FB', textc:'#0C447C',
+    topics:[
+      {n:'Generative AI fundamentals',d:'b',r:{
+        v:[['Google — Intro to Generative AI','https://www.cloudskillsboost.google/course_templates/536'],['IBM — What is Generative AI?','https://www.youtube.com/watch?v=G2fqAlgmoPo']],
+        a:[['McKinsey — What is generative AI?','https://www.mckinsey.com/featured-insights/mckinsey-explainers/what-is-generative-ai'],['MIT Tech Review — GenAI explainer','https://www.technologyreview.com/2023/03/25/1070275/chatgpt-explained']],
+        b:[['The Age of AI — Kissinger et al.','https://www.amazon.com/Age-AI-Humanity-Machine-World/dp/0316273805'],['Impromptu — Reid Hoffman (free PDF)','https://www.impromptubook.com/']],
+        t:[['DeepLearning.AI — GenAI for Everyone','https://www.deeplearning.ai/courses/generative-ai-for-everyone/'],['Google ML Crash Course (free)','https://developers.google.com/machine-learning/crash-course']]}},
+      {n:'AI chatbots: past, present, and future',d:'b',r:{
+        v:[['Andrej Karpathy — Intro to LLMs','https://www.youtube.com/watch?v=zjkBMFhNj_g'],['History of chatbots — timeline','https://www.youtube.com/watch?v=CcekWCfb1-Q']],
+        a:[['Stanford HAI — ChatGPT and the future','https://hai.stanford.edu/news/how-will-language-modelers-like-chatgpt-affect-occupations-and-industries'],['Nature — The journey of chatbots','https://www.nature.com/articles/d41586-023-00107-z']],
+        b:[['Impromptu — Reid Hoffman (free PDF)','https://www.impromptubook.com/']],
+        t:[['ChatGPT Prompt Engineering (free)','https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/']]}},
+      {n:'Cost-optimized models and performance trade-offs',d:'i',r:{
+        v:[['Stanford CS224N — Efficient Transformers','https://web.stanford.edu/class/cs224n/'],['HF — Model quantization explainer','https://www.youtube.com/watch?v=ZKNCKgK3BdM']],
+        a:[['The AI trade-off landscape (a16z)','https://a16z.com/the-emerging-large-language-model-ops-llmops-stack/'],['Artificial Analysis — model benchmarks','https://artificialanalysis.ai/']],
+        b:[['Building LLM Powered Apps (O\'Reilly)','https://www.oreilly.com/library/view/building-llm-powered/9781835462317/']],
+        t:[['Open LLM Leaderboard — Hugging Face','https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard']]}},
+      {n:'Exploring multimedia and language interaction models',d:'i',r:{
+        v:[['DALL-E 3 explained — Two Minute Papers','https://www.youtube.com/watch?v=lFrGFCfvLao'],['Multimodal AI — Google DeepMind','https://www.youtube.com/watch?v=ZiCBRnrMEIE']],
+        a:[['OpenAI — GPT-4V system card','https://openai.com/research/gpt-4v-system-card'],['State of multimodal AI — DeepLearning.AI','https://www.deeplearning.ai/the-batch/tag/multimodal/']],
+        b:[['Stable Diffusion guide (free)','https://stable-diffusion-art.com/']],
+        t:[['HF Diffusers course (free)','https://huggingface.co/learn/diffusion-course/unit0/1']]}},
+      {n:'Advanced applications of generative AI tools',d:'i',r:{
+        v:[['LangChain crash course (freeCodeCamp)','https://www.youtube.com/watch?v=lG7Uxts9SXs'],['RAG explained — IBM Technology','https://www.youtube.com/watch?v=T-D1OfcDW1M']],
+        a:[['Prompt Engineering Guide (Dair.ai)','https://www.promptingguide.ai/'],['LlamaIndex RAG tutorial','https://docs.llamaindex.ai/en/stable/getting_started/starter_example.html']],
+        b:[['Prompt Engineering for GenAI (O\'Reilly)','https://www.oreilly.com/library/view/prompt-engineering-for/9781098153427/']],
+        t:[['DeepLearning.AI — LangChain short course','https://www.deeplearning.ai/short-courses/langchain-for-llm-application-development/']]}}
+    ]
+  },
+  {
+    id:2, title:'The rise of agentic AI and emerging platforms', weeks:'Weeks 2–3',
+    color:'#1D9E75', bg:'#E1F5EE', textc:'#085041',
+    topics:[
+      {n:'Emerging agentic platforms',d:'i',r:{
+        v:[['AI agents explained — Andrej Karpathy','https://www.youtube.com/watch?v=fqVLjtvWgq8'],['AutoGPT deep dive — Fireship','https://www.youtube.com/watch?v=FeIIaJVPpGE']],
+        a:[['LangGraph — agent orchestration docs','https://langchain-ai.github.io/langgraph/'],['Microsoft AutoGen paper (arXiv)','https://arxiv.org/abs/2308.08155']],
+        b:[['Hands-On LLMs (free on GitHub)','https://github.com/HandsOnLLM/Hands-On-Large-Language-Models']],
+        t:[['DeepLearning.AI — AI Agents in LangGraph','https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/'],['CrewAI docs & tutorials','https://docs.crewai.com/']]}},
+      {n:'Vibe living — ambient agent AI',d:'b',r:{
+        v:[['Ambient computing — TED (Amber Case)','https://www.ted.com/talks/amber_case_we_are_all_cyborgs_now'],['AI companions & ambient agents','https://www.youtube.com/watch?v=FGnWIJKlFPw']],
+        a:[['Wired — The ambient computing future','https://www.wired.com/story/ambient-computing-future-internet/'],['a16z — The future of personal AI','https://a16z.com/ai-personal-computers/']],
+        b:[['The Inevitable — Kevin Kelly','https://kk.org/books/the-inevitable/']],
+        t:[['MIT Media Lab — ambient intelligence','https://www.media.mit.edu/research/?filter=groups']]}},
+      {n:'Single vs. multi-agent architectures',d:'i',r:{
+        v:[['Multi-agent systems — Stanford lecture','https://www.youtube.com/watch?v=sOondF7V_h0'],['Designing multi-agent systems (LangChain)','https://www.youtube.com/watch?v=pBBe1pk8hf4']],
+        a:[['Anthropic — Building effective agents','https://www.anthropic.com/engineering/building-effective-agents'],['OpenAI — Practices for agentic systems','https://openai.com/index/practices-for-governing-agentic-ai-systems/']],
+        b:[['Multi-Agent Systems — Shoham & Leyton-Brown (free PDF)','http://www.masfoundations.org/download.html']],
+        t:[['DeepLearning.AI — Multi AI Agent Systems','https://www.deeplearning.ai/short-courses/multi-ai-agent-systems-with-crewai/']]}},
+      {n:'Open-source vs. closed-source AI systems',d:'b',r:{
+        v:[['Open vs. closed AI — The Algorithmic Bridge','https://www.youtube.com/watch?v=OTYDWlkoXeQ'],['Llama 3 vs GPT-4 comparison','https://www.youtube.com/watch?v=2qGV1HBxTas']],
+        a:[['Stanford CRFM — open foundation models','https://crfm.stanford.edu/open-fms/'],['AI Now Institute — open source AI risks','https://ainowinstitute.org/open-source-ai']],
+        b:[['Open Source AI Handbook — Linux Foundation','https://lfaidata.foundation/']],
+        t:[['Ollama — run open models locally','https://ollama.ai/'],['HF Open LLM Leaderboard','https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard']]}}
+    ]
+  },
+  {
+    id:3, title:'Connecting agents to digital ecosystems', weeks:'Weeks 3–4',
+    color:'#7F77DD', bg:'#EEEDFE', textc:'#3C3489',
+    topics:[
+      {n:'Building agents into existing workflows',d:'i',r:{
+        v:[['n8n — AI workflow automation tutorial','https://www.youtube.com/watch?v=1MsmqMg5bow'],['Zapier AI automation guide','https://www.youtube.com/watch?v=LvGWC-DKQYM']],
+        a:[['HBR — How to prepare for AI agents','https://hbr.org/2024/01/how-to-prepare-for-ai-agents'],['LangChain — Agents in production blog','https://blog.langchain.dev/']],
+        b:[['The AI-First Company — Ash Fontana','https://www.penguinrandomhouse.com/books/673763/the-ai-first-company-by-ash-fontana/']],
+        t:[['n8n free tier + templates','https://n8n.io/templates/'],['Make.com AI scenario templates','https://www.make.com/en/templates']]}},
+      {n:'Integrating GenAI with existing systems: challenges and solutions',d:'a',r:{
+        v:[['AI integration challenges — AWS re:Invent','https://www.youtube.com/watch?v=mHvBIBaRlOs'],['Enterprise AI integration patterns (InfoQ)','https://www.youtube.com/watch?v=2uq5AcAkpLY']],
+        a:[['Gartner — Top AI integration challenges','https://www.gartner.com/en/articles/what-it-takes-to-conquer-ai-integration-challenges'],['McKinsey — State of AI in enterprise','https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai']],
+        b:[['AI Transformation Playbook — Andrew Ng (free)','https://landing.ai/ai-transformation-playbook/']],
+        t:[['AWS Bedrock integration guides','https://aws.amazon.com/bedrock/']]}},
+      {n:'Spotify MCP and edge-cases of agent integration',d:'a',r:{
+        v:[['Model Context Protocol explained','https://www.youtube.com/watch?v=7j_NE6Pjv-E'],['Anthropic MCP launch — official demo','https://www.youtube.com/watch?v=Cio3fGFp54o']],
+        a:[['Anthropic — MCP specification (official)','https://modelcontextprotocol.io/'],['MCP GitHub — community integrations','https://github.com/modelcontextprotocol/servers']],
+        b:[['API Design Patterns — JJ Geewax','https://www.manning.com/books/api-design-patterns']],
+        t:[['MCP quickstart — official docs','https://modelcontextprotocol.io/quickstart'],['Glama.ai — MCP server directory','https://glama.ai/mcp/servers']]}},
+      {n:'Empathy and response-tuning for customer-facing agents',d:'i',r:{
+        v:[['RLHF and alignment — Hugging Face','https://www.youtube.com/watch?v=2MBJOuVq380'],['Designing empathetic AI — IDEO','https://www.youtube.com/watch?v=9sZIFHTFVE0']],
+        a:[['Anthropic — Responsible scaling policy','https://www.anthropic.com/news/anthropics-responsible-scaling-policy'],['Customer service AI best practices — Salesforce','https://www.salesforce.com/blog/ai-customer-service/']],
+        b:[['Constitutional AI paper (arXiv)','https://arxiv.org/abs/2212.08073']],
+        t:[['Anthropic Claude API — system prompt tuning','https://docs.anthropic.com/']]}}
+    ]
+  },
+  {
+    id:4, title:'Agent risks, disinformation, and systemic impact', weeks:'Weeks 4–5',
+    color:'#D85A30', bg:'#FAECE7', textc:'#712B13',
+    topics:[
+      {n:'Classic and current cybersecurity risks',d:'i',r:{
+        v:[['OWASP Top 10 for LLMs — official talk','https://www.youtube.com/watch?v=GSN1lFp2w5A'],['AI security risks — SANS Institute','https://www.youtube.com/watch?v=rN7QXEDW8GY']],
+        a:[['OWASP LLM Top 10 (2024)','https://owasp.org/www-project-top-10-for-large-language-model-applications/'],['NIST AI Risk Management Framework','https://www.nist.gov/artificial-intelligence']],
+        b:[['AI & Cybersecurity — free ENISA report','https://www.enisa.europa.eu/publications/artificial-intelligence-cybersecurity-challenges']],
+        t:[['MITRE ATLAS — adversarial ML threat matrix','https://atlas.mitre.org/']]}},
+      {n:'Cybersecurity for agent ecosystems',d:'a',r:{
+        v:[['Prompt injection attacks deep dive','https://www.youtube.com/watch?v=Sv5OLj2nVAQ'],['Securing LLM-based apps — BSides','https://www.youtube.com/watch?v=6b5wZKRnr-g']],
+        a:[['Prompt injection taxonomy — Simon Willison','https://simonwillison.net/2023/Apr/14/worst-that-could-happen/'],['Securing AI agents — Google DeepMind','https://deepmind.google/research/publications/']],
+        b:[['Hacking AI — Gary Marcus (Substack, free)','https://garymarcus.substack.com/']],
+        t:[['AI Village CTF challenges (DEF CON)','https://aivillage.org/'],['Promptfoo — LLM red teaming tool','https://www.promptfoo.dev/']]}},
+      {n:'Limitations of agent perception and error correction',d:'a',r:{
+        v:[['LLM hallucinations — Computerphile','https://www.youtube.com/watch?v=cfqtFvWOfg0'],['AI reliability — MIT 6.S191','https://introtodeeplearning.com/']],
+        a:[['Hallucination leaderboard — Vectara','https://github.com/vectara/hallucination-leaderboard'],['TruthfulQA benchmark paper (arXiv)','https://arxiv.org/abs/2109.07958']],
+        b:[['A Thousand Brains — Jeff Hawkins','https://numenta.com/a-thousand-brains-by-jeff-hawkins/']],
+        t:[['EleutherAI — LM Evaluation Harness','https://github.com/EleutherAI/lm-evaluation-harness']]}}
+    ]
+  },
+  {
+    id:5, title:'AI agents by business function', weeks:'Weeks 5–7',
+    color:'#BA7517', bg:'#FAEEDA', textc:'#633806',
+    topics:[
+      {n:'The maturity cycle of agentic implementation (crawl-walk-run)',d:'b',r:{
+        v:[['AI maturity model — Gartner webinar','https://www.youtube.com/watch?v=aDi4mGu0eR8'],['Enterprise AI adoption journey — IBM','https://www.youtube.com/watch?v=N5gS2mrgGrM']],
+        a:[['BCG AI maturity assessment','https://www.bcg.com/publications/2023/ai-maturity-levels'],['Accenture — AI adoption stages','https://www.accenture.com/us-en/insights/artificial-intelligence']],
+        b:[['Power and Progress — Daron Acemoglu','https://www.publicaffairsbooks.com/titles/daron-acemoglu/power-and-progress/9781541702530/']],
+        t:[['McKinsey AI maturity model (free report)','https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai']]}},
+      {n:'Agentic AI for the product development cycle',d:'i',r:{
+        v:[['AI-accelerated product development — YC','https://www.youtube.com/watch?v=Ow7m0lV_Eas'],['GitHub Copilot in CI/CD — demo','https://www.youtube.com/watch?v=hPVatUSvZq0']],
+        a:[['AI-powered QA pipelines — ThoughtWorks','https://www.thoughtworks.com/insights/blog/ai/ai-software-testing'],['Accelerating product launches with AI — HBR','https://hbr.org/2023/08/where-should-your-company-start-with-generative-ai']],
+        b:[['Continuous Delivery — Humble & Farley','https://continuousdelivery.com/']],
+        t:[['GitHub Copilot free tier','https://github.com/features/copilot'],['Cognition Devin — coding agent','https://www.cognition.ai/']]}},
+      {n:'Functional deployments: HR bots, finance advisors, IT copilots',d:'i',r:{
+        v:[['Microsoft Copilot for M365 — full demo','https://www.youtube.com/watch?v=S7xTBa93TX8'],['AI in HR — Josh Bersin webinar','https://www.youtube.com/watch?v=4Oy8bSTn0uE']],
+        a:[['Workday — AI in HR trends 2024','https://www.workday.com/en-us/pages/the-future-of-work.html'],['Bloomberg — AI finance advisors','https://www.bloomberg.com/professional/blog/ai-finance-applications/']],
+        b:[['The Future of Work — Darrell West (Brookings)','https://www.brookings.edu/books/the-future-of-work/']],
+        t:[['Microsoft Copilot Studio — free trial','https://www.microsoft.com/en-us/microsoft-copilot/microsoft-copilot-studio']]}},
+      {n:'Agent architecture in the enterprise: centralized vs. embedded',d:'a',r:{
+        v:[['Microservices vs monolith AI — InfoQ','https://www.youtube.com/watch?v=cWQFbCM9JEk'],['Enterprise AI architecture patterns','https://www.youtube.com/watch?v=bvMRTiHxSXA']],
+        a:[['AWS — Enterprise AI architecture guide','https://aws.amazon.com/architecture/generative-ai/'],['Google Cloud — GenAI reference architectures','https://cloud.google.com/architecture/generative-ai']],
+        b:[['Fundamentals of Software Architecture — Richards','https://www.oreilly.com/library/view/fundamentals-of-software/9781492043447/']],
+        t:[['Azure AI reference implementations (GitHub)','https://github.com/Azure-Samples']]}}
+    ]
+  },
+  {
+    id:6, title:'The last mile — from pilot to practice', weeks:'Weeks 7–8',
+    color:'#D4537E', bg:'#FBEAF0', textc:'#72243E',
+    topics:[
+      {n:'Voice agents: synthesis, phone systems, real-time applications',d:'i',r:{
+        v:[['ElevenLabs voice AI demo & tutorial','https://www.youtube.com/watch?v=VI3BzfxbYRc'],['Real-time AI voice — LiveKit demo','https://www.youtube.com/watch?v=OJvQqT6DZGE']],
+        a:[['Twilio — voice AI best practices','https://www.twilio.com/en-us/blog/voice-ai'],['OpenAI realtime API docs','https://platform.openai.com/docs/guides/realtime']],
+        b:[['Designing Voice User Interfaces (O\'Reilly)','https://www.oreilly.com/library/view/designing-voice-user/9781491955406/']],
+        t:[['Whisper ASR — OpenAI (open source)','https://github.com/openai/whisper'],['Coqui TTS — open-source voice synthesis','https://github.com/coqui-ai/TTS']]}},
+      {n:'Last-mile integration: why pilots succeed but deployments stall',d:'i',r:{
+        v:[['Why AI projects fail — MIT Sloan','https://www.youtube.com/watch?v=DJtX3S7qx2s'],['AI deployment failures — analysis','https://www.youtube.com/watch?v=cdiD-9MMpb0']],
+        a:[['Gartner — Why 85% of AI projects fail','https://www.gartner.com/en/documents/3932148'],['HBR — Making AI stick in organizations','https://hbr.org/2023/03/keeping-ai-from-becoming-a-passing-fad']],
+        b:[['AI Transformation Playbook — Andrew Ng (free)','https://landing.ai/ai-transformation-playbook/']],
+        t:[['Stanford AI Index Report 2024 (free PDF)','https://aiindex.stanford.edu/report/']]}},
+      {n:'Internal resistance and change management',d:'b',r:{
+        v:[['Leading AI change — John Kotter interview','https://www.youtube.com/watch?v=WOFfNFGvM14'],['Change management for AI adoption','https://www.youtube.com/watch?v=VkV_z5Sp_1Y']],
+        a:[['McKinsey — Organizational change for AI','https://www.mckinsey.com/capabilities/people-and-organizational-performance/our-insights/the-human-side-of-ai'],['MIT — Managing AI resistance in teams','https://sloanreview.mit.edu/article/the-three-types-of-ai-resisters/']],
+        b:[['Leading Change — John P. Kotter','https://www.kotterinc.com/book/leading-change/'],['Human Compatible — Stuart Russell','https://people.eecs.berkeley.edu/~russell/book/']],
+        t:[['Prosci — change management free resources','https://www.prosci.com/resources']]}},
+      {n:'Monitoring agent performance (metrics, KPIs, feedback loops)',d:'i',r:{
+        v:[['LLMOps — monitoring AI in production','https://www.youtube.com/watch?v=Fquj2u7ay40'],['AI observability — Arize AI webinar','https://www.youtube.com/watch?v=n5xn5Nkm5Dk']],
+        a:[['W&B — LLM monitoring guide','https://wandb.ai/site/articles/monitoring-llms-in-production'],['Evidently AI — ML monitoring patterns','https://www.evidentlyai.com/blog']],
+        b:[['Reliable ML — free O\'Reilly report','https://www.oreilly.com/radar/ai-ml/']],
+        t:[['LangSmith — free LLM tracing','https://smith.langchain.com/'],['Helicone — open-source LLM observability','https://www.helicone.ai/']]}}
+    ]
+  },
+  {
+    id:7, title:'Governance, compliance, and agent testing', weeks:'Weeks 8–10',
+    color:'#534AB7', bg:'#EEEDFE', textc:'#26215C',
+    topics:[
+      {n:'Regulation overview: GDPR, CCPA, HIPAA, and emerging agent rules',d:'i',r:{
+        v:[['EU AI Act explained — DW Documentary','https://www.youtube.com/watch?v=jHpjjpKAb4I'],['GDPR for AI — IAPP webinar','https://www.youtube.com/watch?v=iqmHEsU6_7Q']],
+        a:[['EU AI Act — full text (official)','https://artificialintelligenceact.eu/'],['NIST AI RMF Playbook (free)','https://airc.nist.gov/Docs/1']],
+        b:[['Atlas of AI — Kate Crawford','https://yalebooks.yale.edu/book/9780300264630/atlas-of-ai/'],['Weapons of Math Destruction — Cathy O\'Neil','https://mathbabe.org/book/']],
+        t:[['OECD AI Policy Observatory','https://oecd.ai/'],['Future of Privacy Forum','https://fpf.org/issues/artificial-intelligence/']]}},
+      {n:'Testing agent behavior: sandboxing, A/B testing, safety checks',d:'a',r:{
+        v:[['AI red teaming — Microsoft Security','https://www.youtube.com/watch?v=7tSQ7bh4xgk'],['LLM eval frameworks — Hamel Husain','https://www.youtube.com/watch?v=r4kAsqfFkZ4']],
+        a:[['Anthropic — Red teaming language models','https://arxiv.org/abs/2202.03286'],['HELM — Holistic Evaluation (Stanford)','https://crfm.stanford.edu/helm/latest/']],
+        b:[['Software Testing — ISTQB free syllabus','https://www.istqb.org/certifications/certified-tester-foundation-level']],
+        t:[['Inspect — UK AI Safety Institute eval','https://inspect.ai-safety-institute.org.uk/'],['Promptfoo — LLM red teaming tool','https://www.promptfoo.dev/']]}},
+      {n:'Agent speed vs. oversight: where to insert guardrails',d:'a',r:{
+        v:[['AI safety — Yoshua Bengio TED','https://www.youtube.com/watch?v=Y6Sgp7y178k'],['Guardrails AI demo','https://www.youtube.com/watch?v=8wEeGXTbZw0']],
+        a:[['Constitutional AI — Anthropic (arXiv)','https://arxiv.org/abs/2212.08073'],['Guardrails AI docs','https://www.guardrailsai.com/docs/']],
+        b:[['The Alignment Problem — Brian Christian','https://brianchristian.org/the-alignment-problem/']],
+        t:[['NeMo Guardrails — NVIDIA open-source','https://github.com/NVIDIA/NeMo-Guardrails']]}},
+      {n:'Documentation and compliance readiness',d:'i',r:{
+        v:[['Model cards and datasheets — Google','https://www.youtube.com/watch?v=LLZR7YPUiuA'],['AI documentation best practices — IBM','https://www.youtube.com/watch?v=0YLzfN7wlwI']],
+        a:[['Google — Model Cards for Model Reporting','https://modelcards.withgoogle.com/about'],['Hugging Face — model card guide','https://huggingface.co/docs/hub/model-cards']],
+        b:[['Weapons of Math Destruction — Cathy O\'Neil','https://mathbabe.org/book/']],
+        t:[['OpenAI — usage policies & compliance docs','https://openai.com/policies']]}}
+    ]
+  },
+  {
+    id:8, title:'Strategy capstone — leading the agentic future', weeks:'Weeks 10–12',
+    color:'#5F5E5A', bg:'#F1EFE8', textc:'#2C2C2A',
+    topics:[
+      {n:'Strategic roadmap development (short-, medium-, long-term)',d:'i',r:{
+        v:[['AI strategy for leaders — Andrew Ng','https://www.youtube.com/watch?v=NKpuX_yzdYs'],['Building AI roadmaps — MIT Sloan','https://www.youtube.com/watch?v=r4kAsqfFkZ4']],
+        a:[['McKinsey — AI strategy blueprint','https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai'],['HBR — Why every company needs an AI strategy','https://hbr.org/2017/09/why-every-company-needs-an-artificial-intelligence-strategy']],
+        b:[['AI Superpowers — Kai-Fu Lee','https://www.aisuperpowers.com/']],
+        t:[['AI Strategy Canvas — free template (Miro)','https://miro.com/templates/ai-roadmap/']]}},
+      {n:'Team structure, vendor choice, and internal capability building',d:'i',r:{
+        v:[['Building AI teams — MLOps community','https://www.youtube.com/watch?v=gKg0FqFQBm0'],['Make vs. buy AI — a16z panel','https://www.youtube.com/watch?v=JL7E0YN6b5I']],
+        a:[['Sequoia — AI talent market report','https://www.sequoiacap.com/article/ai-report-2024/'],['Forrester — build vs. buy AI guide','https://www.forrester.com/report/the-ai-build-or-buy-decision/']],
+        b:[['Team Topologies — Skelton & Pais','https://teamtopologies.com/book']],
+        t:[['Google — ML team structure guide (free)','https://developers.google.com/machine-learning/guides/rules-of-ml']]}},
+      {n:'Organizational culture and leadership for agent adoption',d:'b',r:{
+        v:[['Culture eats AI strategy — Satya Nadella','https://www.youtube.com/watch?v=YWXRMFWQcxY'],['Leading through AI transformation — BCG','https://www.youtube.com/watch?v=FeKNG48zGes']],
+        a:[['MIT Sloan — Culture is key to AI success','https://sloanreview.mit.edu/article/ai-culture-and-leadership/'],['Deloitte — Humans + AI leadership report','https://www2.deloitte.com/us/en/insights/focus/cognitive-technologies/ai-adoption-in-the-enterprise.html']],
+        b:[['Mindset — Carol Dweck','https://mindsetonline.com/'],['The Coming Wave — Mustafa Suleyman','https://www.the-coming-wave.com/']],
+        t:[['Google Re:Work — management guide (free)','https://rework.withgoogle.com/']]}},
+      {n:'Technical enablers, business opportunities, and maturity assessment',d:'i',r:{
+        v:[['State of AI 2024 — Nathan Benaich','https://www.youtube.com/watch?v=CaW3xqKP3hw'],['AI investment landscape — a16z','https://www.youtube.com/watch?v=6VjLc4-vMfU']],
+        a:[['State of AI Report 2024 (free annual)','https://www.stateof.ai/'],['Our World in Data — AI progress charts','https://ourworldindata.org/artificial-intelligence']],
+        b:[['The Coming Wave — Mustafa Suleyman','https://www.the-coming-wave.com/']],
+        t:[['Kotter International — change management guide','https://www.kotterinc.com/research-and-perspectives/articles/'],['Prosci — ADKAR model explained','https://www.prosci.com/methodology/adkar']]}}
+    ]
+  }
+];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+
+let activeFilter = 'all';
+let allExpanded  = false;
+let searchQuery  = '';
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+
+function render() {
+  const list    = document.getElementById('mlist');
+  const noRes   = document.getElementById('no-results');
+  list.innerHTML = '';
+
+  let totalM = 0, totalT = 0;
+  let anyVisible = false;
+  const q = searchQuery.toLowerCase();
+
+  MODS.forEach(m => {
+    let topics = activeFilter === 'all' ? m.topics : m.topics.filter(t => t.d === activeFilter);
+
+    if (q) {
+      topics = topics.filter(t =>
+        t.n.toLowerCase().includes(q) ||
+        m.title.toLowerCase().includes(q) ||
+        Object.values(t.r).flat().some(([label]) => label.toLowerCase().includes(q))
+      );
+    }
+
+    if (!topics.length) return;
+    anyVisible = true;
+    totalM++;
+    totalT += topics.length;
+
+    const el = document.createElement('div');
+    el.className = 'mod';
+    el.id = 'mod' + m.id;
+    el.setAttribute('role', 'listitem');
+
+    // Auto-expand when searching
+    if (q) el.classList.add('open');
+
+    el.innerHTML = `
+      <div class="mod-hd"
+           onclick="toggleMod(${m.id})"
+           role="button"
+           aria-expanded="false"
+           aria-controls="mod-body-${m.id}">
+        <div class="mod-accent" style="background:${m.color}"></div>
+        <div class="mod-num" style="background:${m.bg};color:${m.textc}">${m.id}</div>
+        <div class="mod-info">
+          <div class="mod-title">${esc(m.title)}</div>
+          <div class="mod-meta">${topics.length} topic${topics.length !== 1 ? 's' : ''} · ${m.weeks}</div>
+        </div>
+        <span class="mod-badge" style="background:${m.bg};color:${m.textc}">${m.weeks.split('–')[0]}</span>
+        <i class="ti ti-chevron-down mchev" aria-hidden="true"></i>
+      </div>
+      <div class="mod-body" id="mod-body-${m.id}">
+        <div class="topics">
+          ${topics.map((t, i) => topicHTML(m.id, m.color, i, t)).join('')}
+        </div>
+      </div>`;
+
+    list.appendChild(el);
+  });
+
+  document.getElementById('kn-m').textContent = totalM;
+  document.getElementById('kn-t').textContent = totalT;
+  noRes.style.display = anyVisible ? 'none' : 'block';
+}
+
+function topicHTML(mid, color, i, t) {
+  const d   = DIFF[t.d];
+  const tid = `topic-${mid}-${i}`;
+  const rid = `res-${mid}-${i}`;
+  return `
+    <div class="topic" id="${tid}">
+      <div class="topic-hd"
+           onclick="toggleTopic('${tid}')"
+           role="button"
+           aria-expanded="false"
+           aria-controls="${rid}">
+        <div class="topic-dot" style="background:${color}"></div>
+        <div class="topic-name">${esc(t.n)}</div>
+        <span class="dbadge ${d.c}">${d.l}</span>
+        <i class="ti ti-chevron-down tchev" aria-hidden="true"></i>
+      </div>
+      <div class="res-panel" id="${rid}">
+        <div class="res-grid">
+          <div class="res-col">
+            <div class="res-col-head"><i class="ti ti-brand-youtube" style="font-size:13px"></i> Videos</div>
+            <ul>${t.r.v.map(([l,u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a></li>`).join('')}</ul>
+          </div>
+          <div class="res-col">
+            <div class="res-col-head"><i class="ti ti-news" style="font-size:13px"></i> Articles</div>
+            <ul>${t.r.a.map(([l,u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a></li>`).join('')}</ul>
+          </div>
+          <div class="res-col">
+            <div class="res-col-head"><i class="ti ti-book" style="font-size:13px"></i> Books</div>
+            <ul>${t.r.b.map(([l,u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a></li>`).join('')}</ul>
+          </div>
+          <div class="res-col">
+            <div class="res-col-head"><i class="ti ti-tools" style="font-size:13px"></i> Free tools</div>
+            <ul>${t.r.t.map(([l,u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a></li>`).join('')}</ul>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+// ─── TOGGLE HELPERS ───────────────────────────────────────────────────────────
+
+function toggleMod(id) {
+  const el  = document.getElementById('mod' + id);
+  const btn = el.querySelector('.mod-hd');
+  const open = el.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open);
+}
+
+function toggleTopic(tid) {
+  const el  = document.getElementById(tid);
+  const btn = el.querySelector('.topic-hd');
+  const open = el.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open);
+}
+
+function toggleAll() {
+  allExpanded = !allExpanded;
+  document.querySelectorAll('.mod').forEach(m => {
+    m.classList.toggle('open', allExpanded);
+    m.querySelector('.mod-hd').setAttribute('aria-expanded', allExpanded);
+  });
+  const label = allExpanded ? 'Collapse all' : 'Expand all';
+  document.getElementById('xbtn').textContent = label;
+}
+
+function setFilter(f, btn) {
+  activeFilter = f;
+  // Sync both pill rows
+  document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll(`.nav-pill`).forEach(p => {
+    if ((f === 'all' && p.textContent.trim().startsWith('All')) ||
+        (f === 'b'   && p.textContent.includes('Beginner')) ||
+        (f === 'i'   && p.textContent.includes('Intermediate')) ||
+        (f === 'a'   && p.textContent.includes('Advanced'))) {
+      p.classList.add('on');
+    }
+  });
+  render();
+}
+
+let searchTimer;
+function onSearch(val) {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    searchQuery = val.trim();
+    render();
+  }, 180);
+}
+
+function toggleFoundations() {
+  const b = document.getElementById('fblock');
+  const open = b.classList.toggle('open');
+  b.querySelector('.f-toggle').setAttribute('aria-expanded', open);
+}
+
+// ─── SCROLL BEHAVIOURS ────────────────────────────────────────────────────────
+
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const total    = document.documentElement.scrollHeight - window.innerHeight;
+  const pct      = total > 0 ? (scrolled / total) * 100 : 0;
+  document.getElementById('reading-bar').style.width = pct + '%';
+
+  const btt = document.getElementById('btt');
+  btt.classList.toggle('show', scrolled > 400);
+}, { passive: true });
+
+// ─── MOBILE: show inline pills ────────────────────────────────────────────────
+
+function checkMobile() {
+  const inlinePills = document.getElementById('inline-pills');
+  inlinePills.style.display = window.innerWidth <= 600 ? 'flex' : 'none';
+}
+window.addEventListener('resize', checkMobile);
+checkMobile();
+
+// ─── ESCAPE HELPER ────────────────────────────────────────────────────────────
+
+function esc(s) {
+  return String(s)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+
+render();
+</script>
+</body>
+</html>
