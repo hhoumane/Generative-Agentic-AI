@@ -1,0 +1,476 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+
+.page{font-family:var(--font-sans);color:var(--color-text-primary);padding:0 0 3rem}
+
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 0 1rem;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:2rem}
+.topbar-left h1{font-size:18px;font-weight:500;line-height:1.3}
+.topbar-left p{font-size:13px;color:var(--color-text-secondary);margin-top:3px}
+.topbar-pills{display:flex;gap:6px;flex-wrap:wrap}
+.pill{font-size:12px;padding:5px 12px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);cursor:pointer;transition:all .15s;white-space:nowrap}
+.pill:hover{background:var(--color-background-secondary)}
+.pill.on{background:var(--color-text-primary);color:var(--color-background-primary);border-color:var(--color-text-primary)}
+
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:2rem}
+.kpi{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:14px 16px}
+.kpi-n{font-size:22px;font-weight:500}
+.kpi-l{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+
+.section-label{font-size:11px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+
+.foundations{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);margin-bottom:2rem;overflow:hidden}
+.foundations-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;background:var(--color-background-secondary)}
+.foundations-header:hover{background:var(--color-background-tertiary)}
+.foundations-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:500}
+.foundations-body{display:none;padding:16px;border-top:0.5px solid var(--color-border-tertiary)}
+.foundations.open .foundations-body{display:block}
+.foundations.open .fchev{transform:rotate(180deg)}
+.fchev{transition:transform .2s;color:var(--color-text-tertiary);font-size:16px}
+.f-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.f-col h4{font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.f-col a{display:block;font-size:12px;color:var(--color-text-info);text-decoration:none;line-height:1.5;margin-bottom:4px}
+.f-col a:hover{text-decoration:underline}
+
+.modules-list{display:flex;flex-direction:column;gap:8px}
+
+.mod{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;transition:border-color .15s}
+.mod:hover{border-color:var(--color-border-secondary)}
+.mod.open{border-color:var(--color-border-primary)}
+
+.mod-header{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;background:var(--color-background-primary)}
+.mod-header:hover{background:var(--color-background-secondary)}
+
+.mod-num{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;flex-shrink:0}
+
+.mod-info{flex:1;min-width:0}
+.mod-title{font-size:14px;font-weight:500;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mod-sub{font-size:12px;color:var(--color-text-secondary);margin-top:2px}
+
+.mod-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.mod-week{font-size:11px;color:var(--color-text-tertiary);white-space:nowrap}
+.mchev{font-size:16px;color:var(--color-text-tertiary);transition:transform .2s}
+.mod.open .mchev{transform:rotate(180deg)}
+
+.mod-body{display:none;border-top:0.5px solid var(--color-border-tertiary)}
+.mod.open .mod-body{display:block}
+
+.topics-list{display:flex;flex-direction:column}
+.topic-row{border-bottom:0.5px solid var(--color-border-tertiary);overflow:hidden}
+.topic-row:last-child{border-bottom:none}
+
+.topic-header{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;background:var(--color-background-primary)}
+.topic-header:hover{background:var(--color-background-secondary)}
+.topic-name{flex:1;font-size:13px;font-weight:500;line-height:1.4}
+.dbadge{font-size:11px;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.db-b{background:var(--color-background-info);color:var(--color-text-info)}
+.db-i{background:var(--color-background-warning);color:var(--color-text-warning)}
+.db-a{background:var(--color-background-danger);color:var(--color-text-danger)}
+.tchev{font-size:14px;color:var(--color-text-tertiary);transition:transform .2s;flex-shrink:0}
+.topic-row.open .tchev{transform:rotate(180deg)}
+
+.res-panel{display:none;padding:12px 16px 16px;background:var(--color-background-secondary)}
+.topic-row.open .res-panel{display:block}
+
+.res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px}
+.res-col-head{font-size:11px;font-weight:500;color:var(--color-text-secondary);display:flex;align-items:center;gap:4px;margin-bottom:6px}
+.res-col ul{list-style:none;padding:0;margin:0}
+.res-col li{margin-bottom:5px}
+.res-col a{font-size:12px;color:var(--color-text-info);text-decoration:none;line-height:1.45;display:block}
+.res-col a:hover{text-decoration:underline}
+
+.progress-bar{height:3px;border-radius:2px;background:var(--color-border-tertiary);margin-top:6px;overflow:hidden}
+.progress-fill{height:100%;border-radius:2px;transition:width .3s}
+
+.expand-all-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.expand-all-row .section-label{margin-bottom:0}
+.small-btn{font-size:12px;color:var(--color-text-secondary);background:transparent;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:4px 10px;cursor:pointer}
+.small-btn:hover{background:var(--color-background-secondary)}
+</style>
+
+<h2 class="sr-only">Generative and Agentic AI study plan — 8 modules with curated free resources for every topic</h2>
+
+<div class="page">
+
+<div class="topbar">
+  <div class="topbar-left">
+    <h1>Generative & Agentic AI</h1>
+    <p>Complete study plan · 8 modules · 35 topics · 140+ free resources</p>
+  </div>
+  <div class="topbar-pills">
+    <button class="pill on" onclick="setFilter('all',this)">All</button>
+    <button class="pill" onclick="setFilter('b',this)">Beginner</button>
+    <button class="pill" onclick="setFilter('i',this)">Intermediate</button>
+    <button class="pill" onclick="setFilter('a',this)">Advanced</button>
+  </div>
+</div>
+
+<div class="kpi-row">
+  <div class="kpi"><div class="kpi-n" id="kpi-m">8</div><div class="kpi-l">Modules</div></div>
+  <div class="kpi"><div class="kpi-n" id="kpi-t">35</div><div class="kpi-l">Topics</div></div>
+  <div class="kpi"><div class="kpi-n">140+</div><div class="kpi-l">Free resources</div></div>
+  <div class="kpi"><div class="kpi-n">12 wk</div><div class="kpi-l">Suggested timeline</div></div>
+</div>
+
+<div class="foundations" id="foundations">
+  <div class="foundations-header" onclick="toggleFoundations()">
+    <div class="foundations-title"><i class="ti ti-star" aria-hidden="true" style="font-size:16px;color:var(--color-text-warning)"></i> Start here — foundation resources</div>
+    <i class="ti ti-chevron-down fchev" aria-hidden="true"></i>
+  </div>
+  <div class="foundations-body">
+    <div class="f-grid">
+      <div class="f-col">
+        <h4><i class="ti ti-brand-youtube" aria-hidden="true"></i> Video courses</h4>
+        <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi" target="_blank">3Blue1Brown — Neural networks</a>
+        <a href="https://www.deeplearning.ai/courses/generative-ai-for-everyone/" target="_blank">DeepLearning.AI — GenAI for Everyone</a>
+        <a href="https://www.youtube.com/watch?v=aircAruvnKk" target="_blank">3Blue1Brown — What is a neural network?</a>
+      </div>
+      <div class="f-col">
+        <h4><i class="ti ti-book" aria-hidden="true"></i> Free books</h4>
+        <a href="https://www.deeplearningbook.org/" target="_blank">Deep Learning — Goodfellow et al.</a>
+        <a href="https://d2l.ai/" target="_blank">Dive into Deep Learning</a>
+        <a href="https://www.fast.ai/" target="_blank">fast.ai — Practical Deep Learning</a>
+      </div>
+      <div class="f-col">
+        <h4><i class="ti ti-file-text" aria-hidden="true"></i> Key papers</h4>
+        <a href="https://arxiv.org/abs/1706.03762" target="_blank">"Attention is All You Need" (2017)</a>
+        <a href="https://arxiv.org/abs/2212.08073" target="_blank">Constitutional AI — Anthropic</a>
+        <a href="https://arxiv.org/abs/2308.08155" target="_blank">AutoGen — Microsoft Research</a>
+      </div>
+      <div class="f-col">
+        <h4><i class="ti ti-tools" aria-hidden="true"></i> Platforms</h4>
+        <a href="https://huggingface.co/learn" target="_blank">Hugging Face NLP course</a>
+        <a href="https://kaggle.com/learn" target="_blank">Kaggle Learn — ML micro-courses</a>
+        <a href="https://developers.google.com/machine-learning/crash-course" target="_blank">Google ML Crash Course</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="expand-all-row">
+  <div class="section-label">Course modules</div>
+  <button class="small-btn" id="expand-btn" onclick="toggleAll()">Expand all</button>
+</div>
+
+<div class="modules-list" id="mlist"></div>
+</div>
+
+<script>
+const D={
+  b:{label:'Beginner',cls:'db-b'},
+  i:{label:'Intermediate',cls:'db-i'},
+  a:{label:'Advanced',cls:'db-a'}
+};
+
+const MODS=[
+  {id:1,title:'Foundations of Generative and Agentic AI',weeks:'Weeks 1–2',color:'#3B8BD4',bg:'#E6F1FB',topics:[
+    {n:'Generative AI fundamentals',d:'b',res:{
+      videos:[{t:'Google — Intro to Generative AI',u:'https://www.cloudskillsboost.google/course_templates/536'},{t:'IBM — What is Generative AI?',u:'https://www.youtube.com/watch?v=G2fqAlgmoPo'}],
+      articles:[{t:'McKinsey — What is generative AI?',u:'https://www.mckinsey.com/featured-insights/mckinsey-explainers/what-is-generative-ai'},{t:'MIT Technology Review — GenAI explainer',u:'https://www.technologyreview.com/2023/03/25/1070275/chatgpt-explained'}],
+      books:[{t:'The Age of AI — Kissinger et al.',u:'https://www.amazon.com/Age-AI-Humanity-Machine-World/dp/0316273805'},{t:'DeepLearning.AI — GenAI for Everyone',u:'https://www.deeplearning.ai/courses/generative-ai-for-everyone/'}],
+      tools:[{t:'Google ML Crash Course (free)',u:'https://developers.google.com/machine-learning/crash-course'},{t:'fast.ai — Practical Deep Learning',u:'https://www.fast.ai/'}]
+    }},
+    {n:'AI chatbots: past, present, and future',d:'b',res:{
+      videos:[{t:'Andrej Karpathy — Intro to LLMs',u:'https://www.youtube.com/watch?v=zjkBMFhNj_g'},{t:'History of chatbots — timeline',u:'https://www.youtube.com/watch?v=CcekWCfb1-Q'}],
+      articles:[{t:'Stanford HAI — ChatGPT and the future',u:'https://hai.stanford.edu/news/how-will-language-modelers-like-chatgpt-affect-occupations-and-industries'},{t:'Nature — The journey of chatbots',u:'https://www.nature.com/articles/d41586-023-00107-z'}],
+      books:[{t:'Impromptu — Reid Hoffman (free PDF)',u:'https://www.impromptubook.com/'}],
+      tools:[{t:'ChatGPT Prompt Engineering (free course)',u:'https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/'}]
+    }},
+    {n:'Cost-optimized models and performance trade-offs',d:'i',res:{
+      videos:[{t:'Stanford CS224N — Efficient Transformers',u:'https://web.stanford.edu/class/cs224n/'},{t:'HF — Model quantization explainer',u:'https://www.youtube.com/watch?v=ZKNCKgK3BdM'}],
+      articles:[{t:'The AI trade-off landscape (a16z)',u:'https://a16z.com/the-emerging-large-language-model-ops-llmops-stack/'},{t:'Artificial Analysis — model benchmarks',u:'https://artificialanalysis.ai/'}],
+      books:[{t:'Building LLM Powered Apps (O\'Reilly)',u:'https://www.oreilly.com/library/view/building-llm-powered/9781835462317/'}],
+      tools:[{t:'Open LLM Leaderboard — Hugging Face',u:'https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard'}]
+    }},
+    {n:'Exploring multimedia and language interaction models',d:'i',res:{
+      videos:[{t:'DALL-E 3 explained — Two Minute Papers',u:'https://www.youtube.com/watch?v=lFrGFCfvLao'},{t:'Multimodal AI — Google DeepMind talk',u:'https://www.youtube.com/watch?v=ZiCBRnrMEIE'}],
+      articles:[{t:'OpenAI — GPT-4V system card',u:'https://openai.com/research/gpt-4v-system-card'},{t:'State of multimodal AI — DeepLearning.AI',u:'https://www.deeplearning.ai/the-batch/tag/multimodal/'}],
+      books:[{t:'Stable Diffusion guide (free online)',u:'https://stable-diffusion-art.com/'}],
+      tools:[{t:'HF Diffusers course (free)',u:'https://huggingface.co/learn/diffusion-course/unit0/1'}]
+    }},
+    {n:'Advanced applications of generative AI tools',d:'i',res:{
+      videos:[{t:'LangChain crash course (freeCodeCamp)',u:'https://www.youtube.com/watch?v=lG7Uxts9SXs'},{t:'RAG explained — IBM Technology',u:'https://www.youtube.com/watch?v=T-D1OfcDW1M'}],
+      articles:[{t:'Prompt Engineering Guide (Dair.ai)',u:'https://www.promptingguide.ai/'},{t:'LlamaIndex RAG tutorial',u:'https://docs.llamaindex.ai/en/stable/getting_started/starter_example.html'}],
+      books:[{t:'Prompt Engineering for GenAI (O\'Reilly)',u:'https://www.oreilly.com/library/view/prompt-engineering-for/9781098153427/'}],
+      tools:[{t:'DeepLearning.AI — LangChain short course',u:'https://www.deeplearning.ai/short-courses/langchain-for-llm-application-development/'}]
+    }}
+  ]},
+  {id:2,title:'The rise of agentic AI and emerging platforms',weeks:'Weeks 2–3',color:'#1D9E75',bg:'#E1F5EE',topics:[
+    {n:'Emerging agentic platforms',d:'i',res:{
+      videos:[{t:'AI agents explained — Andrej Karpathy',u:'https://www.youtube.com/watch?v=fqVLjtvWgq8'},{t:'AutoGPT deep dive — Fireship',u:'https://www.youtube.com/watch?v=FeIIaJVPpGE'}],
+      articles:[{t:'LangGraph — agent orchestration docs',u:'https://langchain-ai.github.io/langgraph/'},{t:'Microsoft AutoGen paper (arXiv)',u:'https://arxiv.org/abs/2308.08155'}],
+      books:[{t:'Hands-On LLMs (free code on GitHub)',u:'https://github.com/HandsOnLLM/Hands-On-Large-Language-Models'}],
+      tools:[{t:'DeepLearning.AI — AI Agents in LangGraph',u:'https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/'},{t:'CrewAI docs & tutorials',u:'https://docs.crewai.com/'}]
+    }},
+    {n:'Vibe living — ambient agent AI',d:'b',res:{
+      videos:[{t:'Ambient computing — TED (Amber Case)',u:'https://www.ted.com/talks/amber_case_we_are_all_cyborgs_now'},{t:'AI companions & ambient agents',u:'https://www.youtube.com/watch?v=FGnWIJKlFPw'}],
+      articles:[{t:'Wired — The ambient computing future',u:'https://www.wired.com/story/ambient-computing-future-internet/'},{t:'a16z — The future of personal AI',u:'https://a16z.com/ai-personal-computers/'}],
+      books:[{t:'The Inevitable — Kevin Kelly',u:'https://kk.org/books/the-inevitable/'}],
+      tools:[{t:'MIT Media Lab — ambient intelligence resources',u:'https://www.media.mit.edu/research/?filter=groups'}]
+    }},
+    {n:'Single vs. multi-agent architectures',d:'i',res:{
+      videos:[{t:'Multi-agent systems — Stanford lecture',u:'https://www.youtube.com/watch?v=sOondF7V_h0'},{t:'Designing multi-agent systems (LangChain)',u:'https://www.youtube.com/watch?v=pBBe1pk8hf4'}],
+      articles:[{t:'Anthropic — Building effective agents',u:'https://www.anthropic.com/engineering/building-effective-agents'},{t:'OpenAI — Practices for agentic systems',u:'https://openai.com/index/practices-for-governing-agentic-ai-systems/'}],
+      books:[{t:'Multi-Agent Systems — Shoham & Leyton-Brown (free PDF)',u:'http://www.masfoundations.org/download.html'}],
+      tools:[{t:'DeepLearning.AI — Multi AI Agent Systems',u:'https://www.deeplearning.ai/short-courses/multi-ai-agent-systems-with-crewai/'}]
+    }},
+    {n:'Open-source vs. closed-source AI systems',d:'b',res:{
+      videos:[{t:'Open vs closed AI — The Algorithmic Bridge',u:'https://www.youtube.com/watch?v=OTYDWlkoXeQ'},{t:'Llama 3 vs GPT-4 comparison',u:'https://www.youtube.com/watch?v=2qGV1HBxTas'}],
+      articles:[{t:'Stanford CRFM — Open foundation models report',u:'https://crfm.stanford.edu/open-fms/'},{t:'AI Now Institute — open source AI risks',u:'https://ainowinstitute.org/open-source-ai'}],
+      books:[{t:'Open Source AI Handbook — Linux Foundation',u:'https://lfaidata.foundation/'}],
+      tools:[{t:'Ollama — run open models locally',u:'https://ollama.ai/'},{t:'HF Open LLM Leaderboard',u:'https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard'}]
+    }}
+  ]},
+  {id:3,title:'Connecting agents to digital ecosystems',weeks:'Weeks 3–4',color:'#7F77DD',bg:'#EEEDFE',topics:[
+    {n:'Building agents into existing workflows',d:'i',res:{
+      videos:[{t:'n8n — AI workflow automation tutorial',u:'https://www.youtube.com/watch?v=1MsmqMg5bow'},{t:'Zapier AI automation guide',u:'https://www.youtube.com/watch?v=LvGWC-DKQYM'}],
+      articles:[{t:'HBR — How to prepare for AI agents',u:'https://hbr.org/2024/01/how-to-prepare-for-ai-agents'},{t:'LangChain — Agents in production blog',u:'https://blog.langchain.dev/'}],
+      books:[{t:'The AI-First Company — Ash Fontana',u:'https://www.penguinrandomhouse.com/books/673763/the-ai-first-company-by-ash-fontana/'}],
+      tools:[{t:'n8n free tier + templates',u:'https://n8n.io/templates/'},{t:'Make.com AI scenario templates',u:'https://www.make.com/en/templates'}]
+    }},
+    {n:'Integrating GenAI with existing systems: challenges and solutions',d:'a',res:{
+      videos:[{t:'AI integration challenges — AWS re:Invent',u:'https://www.youtube.com/watch?v=mHvBIBaRlOs'},{t:'Enterprise AI integration patterns (InfoQ)',u:'https://www.youtube.com/watch?v=2uq5AcAkpLY'}],
+      articles:[{t:'Gartner — Top AI integration challenges',u:'https://www.gartner.com/en/articles/what-it-takes-to-conquer-ai-integration-challenges'},{t:'McKinsey — State of AI in enterprise',u:'https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai'}],
+      books:[{t:'AI Transformation Playbook — Andrew Ng (free)',u:'https://landing.ai/ai-transformation-playbook/'}],
+      tools:[{t:'AWS Bedrock integration guides',u:'https://aws.amazon.com/bedrock/'}]
+    }},
+    {n:'Spotify MCP and edge-cases of agent integration',d:'a',res:{
+      videos:[{t:'Model Context Protocol explained',u:'https://www.youtube.com/watch?v=7j_NE6Pjv-E'},{t:'Anthropic MCP launch — official demo',u:'https://www.youtube.com/watch?v=Cio3fGFp54o'}],
+      articles:[{t:'Anthropic — MCP specification (official)',u:'https://modelcontextprotocol.io/'},{t:'MCP GitHub — community integrations',u:'https://github.com/modelcontextprotocol/servers'}],
+      books:[{t:'API Design Patterns — JJ Geewax',u:'https://www.manning.com/books/api-design-patterns'}],
+      tools:[{t:'MCP quickstart — official docs',u:'https://modelcontextprotocol.io/quickstart'},{t:'Glama.ai — MCP server directory',u:'https://glama.ai/mcp/servers'}]
+    }},
+    {n:'Empathy and response-tuning for customer-facing agents',d:'i',res:{
+      videos:[{t:'RLHF and alignment — Hugging Face',u:'https://www.youtube.com/watch?v=2MBJOuVq380'},{t:'Designing empathetic AI — IDEO',u:'https://www.youtube.com/watch?v=9sZIFHTFVE0'}],
+      articles:[{t:'Anthropic — Responsible scaling policy',u:'https://www.anthropic.com/news/anthropics-responsible-scaling-policy'},{t:'Customer service AI best practices — Salesforce',u:'https://www.salesforce.com/blog/ai-customer-service/'}],
+      books:[{t:'Constitutional AI paper (arXiv)',u:'https://arxiv.org/abs/2212.08073'}],
+      tools:[{t:'Anthropic Claude API — system prompt tuning',u:'https://docs.anthropic.com/'}]
+    }}
+  ]},
+  {id:4,title:'Agent risks, disinformation, and systemic impact',weeks:'Weeks 4–5',color:'#D85A30',bg:'#FAECE7',topics:[
+    {n:'Classic and current cybersecurity risks',d:'i',res:{
+      videos:[{t:'OWASP Top 10 for LLMs — official talk',u:'https://www.youtube.com/watch?v=GSN1lFp2w5A'},{t:'AI security risks — SANS Institute',u:'https://www.youtube.com/watch?v=rN7QXEDW8GY'}],
+      articles:[{t:'OWASP LLM Top 10 (2024)',u:'https://owasp.org/www-project-top-10-for-large-language-model-applications/'},{t:'NIST AI Risk Management Framework',u:'https://www.nist.gov/artificial-intelligence'}],
+      books:[{t:'AI & Cybersecurity — free ENISA report',u:'https://www.enisa.europa.eu/publications/artificial-intelligence-cybersecurity-challenges'}],
+      tools:[{t:'MITRE ATLAS — adversarial ML threat matrix',u:'https://atlas.mitre.org/'}]
+    }},
+    {n:'Cybersecurity for agent ecosystems',d:'a',res:{
+      videos:[{t:'Prompt injection attacks deep dive',u:'https://www.youtube.com/watch?v=Sv5OLj2nVAQ'},{t:'Securing LLM-based apps — BSides',u:'https://www.youtube.com/watch?v=6b5wZKRnr-g'}],
+      articles:[{t:'Prompt injection taxonomy — Simon Willison',u:'https://simonwillison.net/2023/Apr/14/worst-that-could-happen/'},{t:'Securing AI agents — Google DeepMind',u:'https://deepmind.google/research/publications/'}],
+      books:[{t:'Hacking AI — Gary Marcus (Substack, free)',u:'https://garymarcus.substack.com/'}],
+      tools:[{t:'AI Village CTF challenges (DEF CON)',u:'https://aivillage.org/'},{t:'Promptfoo — LLM red teaming tool',u:'https://www.promptfoo.dev/'}]
+    }},
+    {n:'Limitations of agent perception and error correction',d:'a',res:{
+      videos:[{t:'LLM hallucinations — Computerphile',u:'https://www.youtube.com/watch?v=cfqtFvWOfg0'},{t:'AI reliability — MIT 6.S191',u:'https://introtodeeplearning.com/'}],
+      articles:[{t:'Hallucination leaderboard — Vectara',u:'https://github.com/vectara/hallucination-leaderboard'},{t:'TruthfulQA benchmark paper (arXiv)',u:'https://arxiv.org/abs/2109.07958'}],
+      books:[{t:'A Thousand Brains — Jeff Hawkins',u:'https://numenta.com/a-thousand-brains-by-jeff-hawkins/'}],
+      tools:[{t:'EleutherAI — LM Evaluation Harness',u:'https://github.com/EleutherAI/lm-evaluation-harness'}]
+    }}
+  ]},
+  {id:5,title:'AI agents by business function',weeks:'Weeks 5–7',color:'#BA7517',bg:'#FAEEDA',topics:[
+    {n:'The maturity cycle of agentic implementation (crawl-walk-run)',d:'b',res:{
+      videos:[{t:'AI maturity model — Gartner webinar',u:'https://www.youtube.com/watch?v=aDi4mGu0eR8'},{t:'Enterprise AI adoption journey — IBM',u:'https://www.youtube.com/watch?v=N5gS2mrgGrM'}],
+      articles:[{t:'BCG AI maturity assessment',u:'https://www.bcg.com/publications/2023/ai-maturity-levels'},{t:'Accenture — AI adoption stages',u:'https://www.accenture.com/us-en/insights/artificial-intelligence'}],
+      books:[{t:'Power and Progress — Daron Acemoglu',u:'https://www.publicaffairsbooks.com/titles/daron-acemoglu/power-and-progress/9781541702530/'}],
+      tools:[{t:'McKinsey AI maturity model (free report)',u:'https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai'}]
+    }},
+    {n:'Advantages of agentic AI for the product development cycle',d:'i',res:{
+      videos:[{t:'AI-accelerated product development — YC',u:'https://www.youtube.com/watch?v=Ow7m0lV_Eas'},{t:'GitHub Copilot in CI/CD — demo',u:'https://www.youtube.com/watch?v=hPVatUSvZq0'}],
+      articles:[{t:'AI-powered QA pipelines — ThoughtWorks',u:'https://www.thoughtworks.com/insights/blog/ai/ai-software-testing'},{t:'Accelerating product launches with AI',u:'https://hbr.org/2023/08/where-should-your-company-start-with-generative-ai'}],
+      books:[{t:'Continuous Delivery — Humble & Farley',u:'https://continuousdelivery.com/'}],
+      tools:[{t:'GitHub Copilot free tier',u:'https://github.com/features/copilot'},{t:'Cognition Devin — coding agent demo',u:'https://www.cognition.ai/'}]
+    }},
+    {n:'Functional deployments: HR bots, finance advisors, IT copilots',d:'i',res:{
+      videos:[{t:'Microsoft Copilot for M365 — full demo',u:'https://www.youtube.com/watch?v=S7xTBa93TX8'},{t:'AI in HR — Josh Bersin webinar',u:'https://www.youtube.com/watch?v=4Oy8bSTn0uE'}],
+      articles:[{t:'Workday — AI in HR trends 2024',u:'https://www.workday.com/en-us/pages/the-future-of-work.html'},{t:'Bloomberg — AI finance advisors',u:'https://www.bloomberg.com/professional/blog/ai-finance-applications/'}],
+      books:[{t:'The Future of Work — Darrell West (Brookings)',u:'https://www.brookings.edu/books/the-future-of-work/'}],
+      tools:[{t:'Microsoft Copilot Studio — free trial',u:'https://www.microsoft.com/en-us/microsoft-copilot/microsoft-copilot-studio'}]
+    }},
+    {n:'Agent architecture in the enterprise: centralized vs. embedded',d:'a',res:{
+      videos:[{t:'Microservices vs monolith AI — InfoQ',u:'https://www.youtube.com/watch?v=cWQFbCM9JEk'},{t:'Enterprise AI architecture patterns',u:'https://www.youtube.com/watch?v=bvMRTiHxSXA'}],
+      articles:[{t:'AWS — Enterprise AI architecture guide',u:'https://aws.amazon.com/architecture/generative-ai/'},{t:'Google Cloud — GenAI reference architectures',u:'https://cloud.google.com/architecture/generative-ai'}],
+      books:[{t:'Fundamentals of Software Architecture — Richards',u:'https://www.oreilly.com/library/view/fundamentals-of-software/9781492043447/'}],
+      tools:[{t:'Azure AI reference implementations (GitHub)',u:'https://github.com/Azure-Samples'}]
+    }}
+  ]},
+  {id:6,title:'The last mile — from pilot to practice',weeks:'Weeks 7–8',color:'#D4537E',bg:'#FBEAF0',topics:[
+    {n:'Voice agents: synthesis, phone systems, real-time applications',d:'i',res:{
+      videos:[{t:'ElevenLabs voice AI demo & tutorial',u:'https://www.youtube.com/watch?v=VI3BzfxbYRc'},{t:'Real-time AI voice — LiveKit demo',u:'https://www.youtube.com/watch?v=OJvQqT6DZGE'}],
+      articles:[{t:'Twilio — voice AI best practices',u:'https://www.twilio.com/en-us/blog/voice-ai'},{t:'OpenAI realtime API docs',u:'https://platform.openai.com/docs/guides/realtime'}],
+      books:[{t:'Designing Voice User Interfaces (O\'Reilly)',u:'https://www.oreilly.com/library/view/designing-voice-user/9781491955406/'}],
+      tools:[{t:'Whisper ASR — OpenAI (open source)',u:'https://github.com/openai/whisper'},{t:'Coqui TTS — open-source voice synthesis',u:'https://github.com/coqui-ai/TTS'}]
+    }},
+    {n:'Last-mile integration: why pilots succeed but deployments stall',d:'i',res:{
+      videos:[{t:'Why AI projects fail — MIT Sloan talk',u:'https://www.youtube.com/watch?v=DJtX3S7qx2s'},{t:'AI deployment failures — analysis',u:'https://www.youtube.com/watch?v=cdiD-9MMpb0'}],
+      articles:[{t:'Gartner — Why 85% of AI projects fail',u:'https://www.gartner.com/en/documents/3932148'},{t:'HBR — Making AI stick in organizations',u:'https://hbr.org/2023/03/keeping-ai-from-becoming-a-passing-fad'}],
+      books:[{t:'AI Transformation Playbook — Andrew Ng (free)',u:'https://landing.ai/ai-transformation-playbook/'}],
+      tools:[{t:'Stanford AI Index Report 2024 (free PDF)',u:'https://aiindex.stanford.edu/report/'}]
+    }},
+    {n:'Internal resistance and change management',d:'b',res:{
+      videos:[{t:'Leading AI change — John Kotter interview',u:'https://www.youtube.com/watch?v=WOFfNFGvM14'},{t:'Change management for AI adoption',u:'https://www.youtube.com/watch?v=VkV_z5Sp_1Y'}],
+      articles:[{t:'McKinsey — Organizational change for AI',u:'https://www.mckinsey.com/capabilities/people-and-organizational-performance/our-insights/the-human-side-of-ai'},{t:'MIT — Managing AI resistance in teams',u:'https://sloanreview.mit.edu/article/the-three-types-of-ai-resisters/'}],
+      books:[{t:'Leading Change — John P. Kotter',u:'https://www.kotterinc.com/book/leading-change/'},{t:'Human Compatible — Stuart Russell',u:'https://people.eecs.berkeley.edu/~russell/book/'}],
+      tools:[{t:'Prosci — change management free resources',u:'https://www.prosci.com/resources'}]
+    }},
+    {n:'Monitoring agent performance (metrics, KPIs, feedback loops)',d:'i',res:{
+      videos:[{t:'LLMOps — monitoring AI in production',u:'https://www.youtube.com/watch?v=Fquj2u7ay40'},{t:'AI observability — Arize AI webinar',u:'https://www.youtube.com/watch?v=n5xn5Nkm5Dk'}],
+      articles:[{t:'W&B — LLM monitoring guide',u:'https://wandb.ai/site/articles/monitoring-llms-in-production'},{t:'Evidently AI — ML monitoring patterns',u:'https://www.evidentlyai.com/blog'}],
+      books:[{t:'Reliable ML — free O\'Reilly report',u:'https://www.oreilly.com/radar/ai-ml/'}],
+      tools:[{t:'LangSmith — free LLM tracing platform',u:'https://smith.langchain.com/'},{t:'Helicone — open-source LLM observability',u:'https://www.helicone.ai/'}]
+    }}
+  ]},
+  {id:7,title:'Governance, compliance, and agent testing',weeks:'Weeks 8–10',color:'#378ADD',bg:'#E6F1FB',topics:[
+    {n:'Regulation overview: GDPR, CCPA, HIPAA, and emerging agent rules',d:'i',res:{
+      videos:[{t:'EU AI Act explained — DW Documentary',u:'https://www.youtube.com/watch?v=jHpjjpKAb4I'},{t:'GDPR for AI — IAPP webinar',u:'https://www.youtube.com/watch?v=iqmHEsU6_7Q'}],
+      articles:[{t:'EU AI Act — full text (official)',u:'https://artificialintelligenceact.eu/'},{t:'NIST AI RMF Playbook (free)',u:'https://airc.nist.gov/Docs/1'}],
+      books:[{t:'Atlas of AI — Kate Crawford',u:'https://yalebooks.yale.edu/book/9780300264630/atlas-of-ai/'},{t:'Weapons of Math Destruction — Cathy O\'Neil',u:'https://mathbabe.org/book/'}],
+      tools:[{t:'OECD AI Policy Observatory',u:'https://oecd.ai/'},{t:'Future of Privacy Forum — AI governance',u:'https://fpf.org/issues/artificial-intelligence/'}]
+    }},
+    {n:'Testing agent behavior: sandboxing, A/B testing, safety checks',d:'a',res:{
+      videos:[{t:'AI red teaming — Microsoft Security',u:'https://www.youtube.com/watch?v=7tSQ7bh4xgk'},{t:'LLM eval frameworks — Hamel Husain',u:'https://www.youtube.com/watch?v=r4kAsqfFkZ4'}],
+      articles:[{t:'Anthropic — Red teaming language models',u:'https://arxiv.org/abs/2202.03286'},{t:'HELM — Holistic Evaluation of LMs (Stanford)',u:'https://crfm.stanford.edu/helm/latest/'}],
+      books:[{t:'Software Testing — ISTQB free syllabus',u:'https://www.istqb.org/certifications/certified-tester-foundation-level'}],
+      tools:[{t:'Inspect — UK AI Safety Institute eval framework',u:'https://inspect.ai-safety-institute.org.uk/'},{t:'Promptfoo — LLM red teaming tool',u:'https://www.promptfoo.dev/'}]
+    }},
+    {n:'Agent speed vs. oversight: where to insert guardrails',d:'a',res:{
+      videos:[{t:'AI safety and alignment — Yoshua Bengio TED',u:'https://www.youtube.com/watch?v=Y6Sgp7y178k'},{t:'Guardrails AI demo',u:'https://www.youtube.com/watch?v=8wEeGXTbZw0'}],
+      articles:[{t:'Constitutional AI — Anthropic (arXiv)',u:'https://arxiv.org/abs/2212.08073'},{t:'Guardrails AI docs',u:'https://www.guardrailsai.com/docs/'}],
+      books:[{t:'The Alignment Problem — Brian Christian',u:'https://brianchristian.org/the-alignment-problem/'}],
+      tools:[{t:'NeMo Guardrails — NVIDIA open-source',u:'https://github.com/NVIDIA/NeMo-Guardrails'}]
+    }},
+    {n:'Documentation and compliance readiness',d:'i',res:{
+      videos:[{t:'Model cards and datasheets — Google',u:'https://www.youtube.com/watch?v=LLZR7YPUiuA'},{t:'AI documentation best practices — IBM',u:'https://www.youtube.com/watch?v=0YLzfN7wlwI'}],
+      articles:[{t:'Google — Model Cards for Model Reporting',u:'https://modelcards.withgoogle.com/about'},{t:'Hugging Face — model card guide',u:'https://huggingface.co/docs/hub/model-cards'}],
+      books:[{t:'Weapons of Math Destruction — Cathy O\'Neil',u:'https://mathbabe.org/book/'}],
+      tools:[{t:'OpenAI — usage policies and compliance docs',u:'https://openai.com/policies'}]
+    }}
+  ]},
+  {id:8,title:'Strategy capstone — leading the agentic future',weeks:'Weeks 10–12',color:'#5F5E5A',bg:'#F1EFE8',topics:[
+    {n:'Strategic roadmap development (short-, medium-, long-term)',d:'i',res:{
+      videos:[{t:'AI strategy for leaders — Andrew Ng Stanford',u:'https://www.youtube.com/watch?v=NKpuX_yzdYs'},{t:'Building AI roadmaps — MIT Sloan',u:'https://www.youtube.com/watch?v=r4kAsqfFkZ4'}],
+      articles:[{t:'McKinsey — AI strategy blueprint',u:'https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai'},{t:'HBR — Why every company needs an AI strategy',u:'https://hbr.org/2017/09/why-every-company-needs-an-artificial-intelligence-strategy'}],
+      books:[{t:'AI Superpowers — Kai-Fu Lee',u:'https://www.aisuperpowers.com/'}],
+      tools:[{t:'AI Strategy Canvas — free template (Miro)',u:'https://miro.com/templates/ai-roadmap/'}]
+    }},
+    {n:'Team structure, vendor choice, and internal capability building',d:'i',res:{
+      videos:[{t:'Building AI teams — MLOps community',u:'https://www.youtube.com/watch?v=gKg0FqFQBm0'},{t:'Make vs. buy AI — a16z panel',u:'https://www.youtube.com/watch?v=JL7E0YN6b5I'}],
+      articles:[{t:'Sequoia — AI talent market report',u:'https://www.sequoiacap.com/article/ai-report-2024/'},{t:'Forrester — build vs. buy AI guide',u:'https://www.forrester.com/report/the-ai-build-or-buy-decision/'}],
+      books:[{t:'Team Topologies — Skelton & Pais',u:'https://teamtopologies.com/book'}],
+      tools:[{t:'Google — ML team structure guide (free)',u:'https://developers.google.com/machine-learning/guides/rules-of-ml'}]
+    }},
+    {n:'Organizational culture and leadership for agent adoption',d:'b',res:{
+      videos:[{t:'Culture eats AI strategy — Satya Nadella',u:'https://www.youtube.com/watch?v=YWXRMFWQcxY'},{t:'Leading through AI transformation — BCG',u:'https://www.youtube.com/watch?v=FeKNG48zGes'}],
+      articles:[{t:'MIT Sloan — Culture is key to AI success',u:'https://sloanreview.mit.edu/article/ai-culture-and-leadership/'},{t:'Deloitte — Humans + AI leadership report',u:'https://www2.deloitte.com/us/en/insights/focus/cognitive-technologies/ai-adoption-in-the-enterprise.html'}],
+      books:[{t:'Mindset — Carol Dweck',u:'https://mindsetonline.com/'},{t:'The Coming Wave — Mustafa Suleyman',u:'https://www.the-coming-wave.com/'}],
+      tools:[{t:'Google Re:Work — data-driven management (free)',u:'https://rework.withgoogle.com/'}]
+    }},
+    {n:'Summary of technical enablers and business opportunities',d:'b',res:{
+      videos:[{t:'State of AI 2024 — Nathan Benaich',u:'https://www.youtube.com/watch?v=CaW3xqKP3hw'},{t:'AI investment landscape — a16z Annual Summit',u:'https://www.youtube.com/watch?v=6VjLc4-vMfU'}],
+      articles:[{t:'State of AI Report 2024 (free annual)',u:'https://www.stateof.ai/'},{t:'Our World in Data — AI progress charts',u:'https://ourworldindata.org/artificial-intelligence'}],
+      books:[{t:'The Coming Wave — Mustafa Suleyman',u:'https://www.the-coming-wave.com/'}],
+      tools:[{t:'Goldman Sachs — AI opportunity report',u:'https://www.goldmansachs.com/intelligence/pages/ai-investment-forecast-to-approach-200-billion-globally-by-2025.html'}]
+    }},
+    {n:'Maturity assessment of agent strategy and change management',d:'i',res:{
+      videos:[{t:'AI maturity assessment — Gartner',u:'https://www.youtube.com/watch?v=aDi4mGu0eR8'},{t:'Change management frameworks — PMI',u:'https://www.youtube.com/watch?v=VkV_z5Sp_1Y'}],
+      articles:[{t:'MIT — AI readiness assessment (free tool)',u:'https://www.technologyreview.com/2023/07/14/1076244/mit-ai-readiness-assessment/'},{t:'Prosci — ADKAR change model explained',u:'https://www.prosci.com/methodology/adkar'}],
+      books:[{t:'Switch — Chip & Dan Heath',u:'https://heathbrothers.com/books/switch/'}],
+      tools:[{t:'Kotter International — free change management guide',u:'https://www.kotterinc.com/research-and-perspectives/articles/'}]
+    }}
+  ]}
+];
+
+let activeFilter='all';
+let allExpanded=false;
+
+function toggleFoundations(){
+  document.getElementById('foundations').classList.toggle('open');
+}
+
+function setFilter(f,btn){
+  activeFilter=f;
+  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  render();
+}
+
+function render(){
+  const list=document.getElementById('mlist');
+  list.innerHTML='';
+  let totalT=0,totalM=0;
+  MODS.forEach(m=>{
+    const topics=activeFilter==='all'?m.topics:m.topics.filter(t=>t.d===activeFilter);
+    if(!topics.length)return;
+    totalM++;totalT+=topics.length;
+    const div=document.createElement('div');
+    div.className='mod';
+    div.id='mod'+m.id;
+    const pct=Math.round((m.id/8)*100);
+    div.innerHTML=`
+      <div class="mod-header" onclick="toggleMod(${m.id})">
+        <div class="mod-num" style="background:${m.bg};color:${m.color}">${m.id}</div>
+        <div class="mod-info">
+          <div class="mod-title">${m.title}</div>
+          <div class="mod-sub">${topics.length} topic${topics.length!==1?'s':''} · ${m.weeks}</div>
+        </div>
+        <div class="mod-right">
+          <i class="ti ti-chevron-down mchev" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:${m.color}30"></div></div>
+      <div class="mod-body">
+        <div class="topics-list">${topics.map((t,ti)=>topicHTML(m.id,ti,t)).join('')}</div>
+      </div>`;
+    list.appendChild(div);
+  });
+  document.getElementById('kpi-m').textContent=totalM;
+  document.getElementById('kpi-t').textContent=totalT;
+}
+
+function topicHTML(mid,ti,t){
+  const d=D[t.d];
+  return`<div class="topic-row" id="tr${mid}_${ti}">
+    <div class="topic-header" onclick="toggleTopic(${mid},${ti})">
+      <div class="topic-name">${t.n}</div>
+      <span class="dbadge ${d.cls}">${d.label}</span>
+      <i class="ti ti-chevron-down tchev" aria-hidden="true"></i>
+    </div>
+    <div class="res-panel">
+      <div class="res-grid">
+        <div class="res-col">
+          <div class="res-col-head"><i class="ti ti-brand-youtube" aria-hidden="true"></i> Videos</div>
+          <ul>${t.res.videos.map(r=>`<li><a href="${r.u}" target="_blank">${r.t}</a></li>`).join('')}</ul>
+        </div>
+        <div class="res-col">
+          <div class="res-col-head"><i class="ti ti-news" aria-hidden="true"></i> Articles</div>
+          <ul>${t.res.articles.map(r=>`<li><a href="${r.u}" target="_blank">${r.t}</a></li>`).join('')}</ul>
+        </div>
+        <div class="res-col">
+          <div class="res-col-head"><i class="ti ti-book" aria-hidden="true"></i> Books</div>
+          <ul>${t.res.books.map(r=>`<li><a href="${r.u}" target="_blank">${r.t}</a></li>`).join('')}</ul>
+        </div>
+        <div class="res-col">
+          <div class="res-col-head"><i class="ti ti-tools" aria-hidden="true"></i> Free tools</div>
+          <ul>${t.res.tools.map(r=>`<li><a href="${r.u}" target="_blank">${r.t}</a></li>`).join('')}</ul>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function toggleMod(id){
+  document.getElementById('mod'+id).classList.toggle('open');
+}
+
+function toggleTopic(mid,ti){
+  document.getElementById('tr'+mid+'_'+ti).classList.toggle('open');
+}
+
+function toggleAll(){
+  allExpanded=!allExpanded;
+  document.querySelectorAll('.mod').forEach(m=>m.classList.toggle('open',allExpanded));
+  document.getElementById('expand-btn').textContent=allExpanded?'Collapse all':'Expand all';
+}
+
+render();
+</script>
